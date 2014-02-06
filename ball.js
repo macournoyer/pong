@@ -8,11 +8,11 @@ function Ball() {
 
   // Load sound
   this.blip = new Audio()
-  if (this.blip.canPlayType('audio/mpeg')) {
-    this.blip.src = 'blip.mp3'
-  } else {
-    this.blip.src = 'blip.ogg'
-  }
+  // if (this.blip.canPlayType('audio/mpeg')) {
+  //   this.blip.src = 'blip.mp3'
+  // } else {
+  //   this.blip.src = 'blip.ogg'
+  // }
 }
 
 Ball.prototype = Object.create(Entity.prototype)
