@@ -6,8 +6,8 @@ game = new Game($('canvas')[0])
 game.entities = [
   new Background()
   game.ball = new Ball()
-  #game.player = new Player()
-  #game.bot = new Bot()
+  game.player = new Player()
+  game.bot = new Bot()
 ]
 
 game.start()

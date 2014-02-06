@@ -5,7 +5,7 @@ class Ball extends Entity
     @height = 20
     @reset()
 
-  upate: ->
+  update: ->
     super
     # Detects if and which paddle we hit
     if @intersect(game.player)
