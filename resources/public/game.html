@@ -5,13 +5,14 @@
   <title>Game</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-  <canvas tabindex="1" width="640" height="480"></canvas>
+<body onload="pong.game.start($('canvas')[0])">
+  <canvas width="640" height="480"></canvas>
 
   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-  <script src="main.js"></script>
-  <script>
-    pong.start($('canvas')[0])
+  <script src="js/goog/base.js"></script>
+  <script src="js/main.js"></script>
+  <script type="text/javascript">    
+    goog.require('pong.game');    
   </script>
 </body>
 </html>
