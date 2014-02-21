@@ -1,7 +1,7 @@
 (defproject pong-cljs "0.1.0-SNAPSHOT"
   :source-paths ["src-clj"]
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/clojurescript "0.0-2014"
+                 [org.clojure/clojurescript "0.0-2156"
                   :exclusions [org.apache.ant/ant]]
                  [compojure "1.1.6"]
                  [hiccup "1.0.4"]]

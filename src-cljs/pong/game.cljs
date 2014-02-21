@@ -1,48 +1,54 @@
 (ns pong.game
-  (:require [pong.systems.renderer :as r]))
+  (:require [pong.systems.renderer :as r]
+            [pong.systems.physics :as phys]
+            [pong.systems.moveable :as move]
+            [pong.lib.core :refer [all-e load]])
+  (:require-macros [pong.lib.macros :refer [dofs letc ! ?]])
+  (:use [pong.components :only [renderable colored position
+                                keyboard actions rectangular
+                                moveable]]))
+
 
 ; settings
 (def fps 60)
 (def pad-width 20)
 (def pad-height 60)
 
-
 (def context nil)
 (def width nil)
 (def height nil)
+(def entities nil)
 
-(defn entities 
+
+(defn configure-entities 
+  "Setup the game-entities."
   [width height]
-  {:background {:renderable r/draw-rectangular
-      :colored "#000000"
-      :position {:x 0 :y 0}
-      :rectangular {:width width :height height}
-      :user-controlled :keys-1}
+  [:background [(renderable r/draw-rectangular)
+      (colored "#000000")
+      (position 0 0)
+      (rectangular width height)]
 
-   :pad-1 {:renderable r/draw-rectangular
-      :colored "#FFFFFF"
-      :position {:x 5 :y 30}
-      :rectangular {:width pad-width :height pad-height}
-      :computer-controlled 1}
+   :pad-1 [ (renderable r/draw-rectangular)
+            (colored "#FFFFFF")
+            (position 5 30)
+            (rectangular pad-width pad-height)
+            (moveable)
+            (keyboard)
+            (actions)]])
 
-   :pad-2 {:renderable r/draw-rectangular
-      :colored "#FFFFFF"
-      :position {:x (- width pad-width 5) :y 50}
-      :rectangular {:width pad-width :height pad-height}}
-      :user-controlled :keys-2})
+(defn start [canvas]   
+    (set! context (.getContext canvas "2d"))
+    (set! width (.-width canvas))
+    (set! height (.-height canvas))   
+    (set! entities (configure-entities width height))
 
-(defn all-e
-  [es keyword]
-  (apply dissoc es (for [[k v] es :when (not (keyword v))] k)))
-
-(defn start [canvas]
-  (set! context (.getContext canvas "2d"))
-  (set! width (.-width canvas))
-  (set! height (.-height canvas))
-  (let [entities (entities width height)]
+    (load entities)
     (js/setInterval (fn []
-      (r/render-all context (all-e entities :renderable))
-      ) (/ 1000 fps))))
+      (move/keyboard (all-e :keyboard))
+      (move/move (all-e :keyboard))
 
-(defn set-entities [entities*]
-  (set! entities entities*))
+      (phys/step (all-e :moveable))
+
+      (r/render context (all-e :renderable))      
+      ) (/ 1000 fps)))
+

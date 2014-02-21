@@ -1,14 +1,27 @@
-(ns pong.systems.renderer)
+(ns pong.systems.renderer
+  (:require [pong.lib.core :refer [all-e as]])
+  (:require-macros [pong.lib.macros :refer [dofs letc ! ?]]))
 
-(defn render-all
-  [context es]
-  (doseq [[id e] es]
-    ((:renderable e) context e)))
+(defn render
+  [context ents]
+  (dofs [e ents]    
+    (letc e [rend :renderable
+             pos :position
+             color :colored
+             rect :rectangular]
+    ((? rend :fn) context e))))
 
 (defn draw-rectangular
-  [context e]
-  (let [color (:colored e)    
-        {x :x y :y} (:position e)
-        {w :width h :height} (:rectangular e)]
-    (set! (.-fillStyle context) color)
-    (.fillRect context x y w h)))
+  [ctx e]
+  (letc e [rend :renderable
+             pos :position
+             color :colored
+             rect :rectangular]
+    ;(.log js/console y)
+    (set! (.-fillStyle ctx) (? color :color))
+    (.fillRect ctx 
+      (? pos :x) 
+      (? pos :y) 
+      (? rect :width) 
+      (? rect :height))))
+
