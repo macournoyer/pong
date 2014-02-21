@@ -14,4 +14,4 @@ On Mac OS:
 
 After the ClojureScript code was compiled by "cljsbuild", you can open the application.
 
-    open resources/public/game.html
+    $ open resources/public/game.html
