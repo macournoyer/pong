@@ -6,12 +6,13 @@
 (defn keyboard 
   [ents]
   (dofs [e ents]
-    (letc e [actions :actions]
+    (letc e [actions :actions
+             controls :keyboard]
       (! actions :move-up false)
       (! actions :move-down false)
       (cond 
-        (key? :up) (! actions :move-up true)
-        (key? :down) (! actions :move-down true)))))
+        (key? (? controls :up-key)) (! actions :move-up true)
+        (key? (? controls :down-key)) (! actions :move-down true)))))
 
 (defn move
   [ents]

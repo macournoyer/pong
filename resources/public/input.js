@@ -2,20 +2,16 @@
 
     var active = {};
     var keys = {
-        "left": 37,
         "up": 38,
-        "right": 39,
         "down": 40,
-        "z": 90,
-        "space": 32
+        "w": 87,
+        "s": 83
     };
   var capture = {
-    37: true,
     38: true,
-    39: true,
     40: true,
-    90: true,
-    32: true
+    87: true,
+    83: true,
   };
 
     var input = {

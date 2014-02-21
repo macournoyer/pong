@@ -24,4 +24,7 @@
 (component colored [c]
   :color c)
 
-(component keyboard [])
+(component keyboard [up-key down-key]
+  :up-key up-key
+  :down-key down-key)
+

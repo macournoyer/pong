@@ -5,8 +5,8 @@
             [pong.lib.core :refer [all-e load]])
   (:require-macros [pong.lib.macros :refer [dofs letc ! ?]])
   (:use [pong.components :only [renderable colored position
-                                keyboard actions rectangular
-                                moveable]]))
+                                keyboard actions
+                                rectangular moveable]]))
 
 
 ; settings
@@ -33,8 +33,16 @@
             (position 5 30)
             (rectangular pad-width pad-height)
             (moveable)
-            (keyboard)
-            (actions)]])
+            (keyboard :up :down)
+            (actions)]
+   :pad-2 [ (renderable r/draw-rectangular)
+            (colored "#FFFFFF")
+            (position (- width 5 pad-width) 60)
+            (rectangular pad-width pad-height)
+            (moveable)
+            (keyboard :w :s)
+            (actions)
+            ]])
 
 (defn start [canvas]   
     (set! context (.getContext canvas "2d"))
