@@ -28,3 +28,7 @@
   :up-key up-key
   :down-key down-key)
 
+(component bounds [])
+(component solid [])
+
+

@@ -5,8 +5,8 @@
             [pong.lib.core :refer [all-e load]])
   (:require-macros [pong.lib.macros :refer [dofs letc ! ?]])
   (:use [pong.components :only [renderable colored position
-                                keyboard actions
-                                rectangular moveable]]))
+                                keyboard actions bounds
+                                rectangular moveable solid]]))
 
 
 ; settings
@@ -27,22 +27,25 @@
       (colored "#000000")
       (position 0 0)
       (rectangular width height)]
-
-   :pad-1 [ (renderable r/draw-rectangular)
-            (colored "#FFFFFF")
-            (position 5 30)
-            (rectangular pad-width pad-height)
-            (moveable)
-            (keyboard :up :down)
-            (actions)]
+   :board [(rectangular width height)
+      (position 0 0)
+      (bounds)]
+   :pad-1 [(renderable r/draw-rectangular)
+      (colored "#FFFFFF")
+      (position 5 30)
+      (rectangular pad-width pad-height)
+      (moveable)
+      (keyboard :w :s)
+      (actions)
+      (solid)]
    :pad-2 [ (renderable r/draw-rectangular)
-            (colored "#FFFFFF")
-            (position (- width 5 pad-width) 60)
-            (rectangular pad-width pad-height)
-            (moveable)
-            (keyboard :w :s)
-            (actions)
-            ]])
+      (colored "#FFFFFF")
+      (position (- width 5 pad-width) 60)
+      (rectangular pad-width pad-height)
+      (moveable)
+      (keyboard :up :down)
+      (actions)
+      (solid)]])
 
 (defn start [canvas]   
     (set! context (.getContext canvas "2d"))
@@ -53,8 +56,9 @@
     (load entities)
     (js/setInterval (fn []
       (move/keyboard (all-e :keyboard))
-      (move/move (all-e :keyboard))
+      (move/move (all-e :keyboard))     
 
+      (phys/block-movement (all-e :solid))      
       (phys/step (all-e :moveable))
 
       (r/render context (all-e :renderable))      
