@@ -17,8 +17,10 @@
   [ents]
   (dofs [e ents]
     (dofs [b (all-e :bounds)]
-      (letc e [ vel :moveable]
-        (cond 
-          (and (= (blocked? e b) :top) (< (? vel :velocity-y) 0)) (! vel :velocity-y 0)
-          (and (= (blocked? e b) :bottom) (> (? vel :velocity-y) 0)) (! vel :velocity-y 0))))))
+      (letc e [ rebounds :rebounds ]
+        (letc e [ vel :moveable ]
+          (let [reb-factor (if rebounds -1 0)]
+            (cond 
+              (and (= (blocked? e b) :top) (< (? vel :velocity-y) 0)) (! vel :velocity-y (* reb-factor (? vel :velocity-y)))
+              (and (= (blocked? e b) :bottom) (> (? vel :velocity-y) 0)) (! vel :velocity-y (* reb-factor (? vel :velocity-y))))))))))
 

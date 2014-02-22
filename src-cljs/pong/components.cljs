@@ -5,9 +5,9 @@
   :x x
   :y y)
 
-(component moveable []
-  :velocity-x 0
-  :velocity-y 0)
+(component moveable [velocity-x velocity-y]
+  :velocity-x (or velocity-x 0)
+  :velocity-y (or velocity-y 0))
 
 (component renderable [func]
   :fn func)
@@ -30,5 +30,6 @@
 
 (component bounds [])
 (component solid [])
+(component rebounds [])
 
 

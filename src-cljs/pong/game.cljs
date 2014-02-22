@@ -5,7 +5,7 @@
             [pong.lib.core :refer [all-e load]])
   (:require-macros [pong.lib.macros :refer [dofs letc ! ?]])
   (:use [pong.components :only [renderable colored position
-                                keyboard actions bounds
+                                keyboard actions bounds rebounds
                                 rectangular moveable solid]]))
 
 
@@ -13,6 +13,7 @@
 (def fps 60)
 (def pad-width 20)
 (def pad-height 60)
+(def ball-diameter 20)
 
 (def context nil)
 (def width nil)
@@ -45,7 +46,16 @@
       (moveable)
       (keyboard :up :down)
       (actions)
-      (solid)]])
+      (solid)]
+    :ball [(renderable r/draw-rectangular)
+      (colored "#FFFFFF")
+      (position (- (/ width 2) (/ ball-diameter 2))
+                (- (/ height 2) (/ ball-diameter 2)))
+      (rectangular ball-diameter ball-diameter)
+      (moveable 0 10)
+      (solid)
+      (rebounds)]
+    ])
 
 (defn start [canvas]   
     (set! context (.getContext canvas "2d"))
