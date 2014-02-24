@@ -35,7 +35,7 @@
       (colored "#FFFFFF")
       (position 5 30)
       (rectangular pad-width pad-height)
-      (moveable)
+      (moveable 0 0)
       (keyboard :w :s)
       (actions)
       (solid)]
@@ -43,7 +43,7 @@
       (colored "#FFFFFF")
       (position (- width 5 pad-width) 60)
       (rectangular pad-width pad-height)
-      (moveable)
+      (moveable 0 0)
       (keyboard :up :down)
       (actions)
       (solid)]
@@ -52,7 +52,7 @@
       (position (- (/ width 2) (/ ball-diameter 2))
                 (- (/ height 2) (/ ball-diameter 2)))
       (rectangular ball-diameter ball-diameter)
-      (moveable 0 10)
+      (moveable 5 10)
       (solid)
       (rebounds)]
     ])
