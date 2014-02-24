@@ -31,5 +31,6 @@
 (component bounds [])
 (component solid [])
 (component rebounds [])
+(component paddle [])
 
 

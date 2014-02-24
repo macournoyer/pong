@@ -9,7 +9,12 @@
            rect-a :rectangular]
         (letc b [pos-b :position
                  rect-b :rectangular]             
-              (when (<= (? pos-a :y) (? pos-b :y))
+              (when (and 
+                      (= (? pos-a :y) (? pos-b :y))
+                      (> (? pos-a :x)
+                         (? pos-b :x))
+                      (< (? pos-a :x)
+                         (+ (? pos-b :x) (? rect-b :width))))              
                 true))))
 
 (defn bottom?
@@ -19,8 +24,14 @@
            rect-a :rectangular]
         (letc b [pos-b :position
                  rect-b :rectangular]             
-              (when (>= (+ (? pos-a :y) (? rect-a :height))
-                        (? rect-b :height))
+              (when (and 
+                      (= (+ (? pos-a :y) (? rect-a :height))
+                       (? pos-b :y))
+                      (> (? pos-a :x)
+                         (? pos-b :x))
+                      (< (? pos-a :x)
+                         (+ (? pos-b :x) (? rect-b :width))))
+                (.log js/console "bottom")
                 true))))
 
 (defn left?
@@ -30,9 +41,15 @@
            rect-a :rectangular]
         (letc b [pos-b :position
                  rect-b :rectangular]     
-              (when (= (? pos-a :x) 
-                       (? pos-b :x))
+              (when (and 
+                      (= (? pos-a :x) (+ (? rect-b :width) (? pos-b :x)))
+                      (< (? pos-a :y)
+                         (+ (? pos-b :y) (? rect-b :height)))
+                      (> (? pos-a :y)
+                         (? pos-b :y)))
+                (.log js/console "left")
                 true))))
+
 
 (defn right?
   "Does a collide on the right?" 
@@ -41,7 +58,14 @@
            rect-a :rectangular]
         (letc b [pos-b :position
                  rect-b :rectangular]
-              (when (= 
-                      (+ (? pos-a :x) (? rect-a :width))
-                      (+ (? pos-b :x) (? rect-b :width)))
+              (.log js/console (? pos-b :x))
+              (when (and 
+                      (= 
+                        (+ (? pos-a :x) (? rect-a :width))
+                        (+ (? pos-b :x) (? rect-b :width)))
+                      (< (? pos-a :y)
+                         (+ (? pos-b :y) (? rect-b :height)))
+                      (> (? pos-a :y)
+                         (? pos-b :y)))
+                (.log js/console "right")
                 true))))

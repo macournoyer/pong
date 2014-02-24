@@ -6,7 +6,8 @@
   (:require-macros [pong.lib.macros :refer [dofs letc ! ?]])
   (:use [pong.components :only [renderable colored position
                                 keyboard actions bounds rebounds
-                                rectangular moveable solid]]))
+                                rectangular moveable solid
+                                paddle ]]))
 
 
 ; settings
@@ -28,8 +29,11 @@
       (colored "#000000")
       (position 0 0)
       (rectangular width height)]
-   :board [(rectangular width height)
-      (position 0 0)
+   :top-boundary [(rectangular width 0)
+      (position 0 0)      
+      (bounds)]
+   :bottom-boundary [(rectangular width 0)
+      (position 0 height)
       (bounds)]
    :pad-1 [(renderable r/draw-rectangular)
       (colored "#FFFFFF")
@@ -38,7 +42,8 @@
       (moveable 0 0)
       (keyboard :w :s)
       (actions)
-      (solid)]
+      (solid)
+      (paddle)]
    :pad-2 [ (renderable r/draw-rectangular)
       (colored "#FFFFFF")
       (position (- width 5 pad-width) 60)
@@ -46,13 +51,14 @@
       (moveable 0 0)
       (keyboard :up :down)
       (actions)
-      (solid)]
+      (solid)
+      (paddle)]
     :ball [(renderable r/draw-rectangular)
       (colored "#FFFFFF")
       (position (- (/ width 2) (/ ball-diameter 2))
                 (- (/ height 2) (/ ball-diameter 2)))
       (rectangular ball-diameter ball-diameter)
-      (moveable 5 10)
+      (moveable 5 10)      
       (solid)
       (rebounds)]
     ])
@@ -68,7 +74,9 @@
       (move/keyboard (all-e :keyboard))
       (move/move (all-e :keyboard))     
 
-      (phys/block-movement (all-e :solid))      
+      (phys/block-movement (all-e :solid))    
+      (phys/rebound-paddle (all-e :rebounds))     
+       
       (phys/step (all-e :moveable))
 
       (r/render context (all-e :renderable))      
