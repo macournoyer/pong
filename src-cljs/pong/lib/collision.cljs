@@ -31,7 +31,6 @@
                          (? pos-b :x))
                       (< (? pos-a :x)
                          (+ (? pos-b :x) (? rect-b :width))))
-                (.log js/console "bottom")
                 true))))
 
 (defn left?
@@ -47,7 +46,6 @@
                          (+ (? pos-b :y) (? rect-b :height)))
                       (> (? pos-a :y)
                          (? pos-b :y)))
-                (.log js/console "left")
                 true))))
 
 
@@ -67,5 +65,4 @@
                          (+ (? pos-b :y) (? rect-b :height)))
                       (> (? pos-a :y)
                          (? pos-b :y)))
-                (.log js/console "right")
                 true))))
