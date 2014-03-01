@@ -24,3 +24,15 @@
            (let [~n (aget ~vs i#)]
              ~@body
              (recur (inc i#))))))))
+
+(defmacro dofs2 [seq-exprs & body]
+  (let [emit (fn emit [[sym coll & rest-exprs]]
+               `(let [c# (count ~coll)]
+                  (loop [i# 0] ;loop from zero
+                     (when (< i# c#) ; as long a we have more items
+                        (let [~sym (aget ~coll i#)]
+                         ~(if rest-exprs
+                            (emit rest-exprs)
+                            `(do ~@body))
+                         (recur (inc i#)))))))]
+    (emit seq-exprs)))

@@ -1,7 +1,7 @@
 (ns pong.systems.physics
   (:require [pong.lib.collision :refer [left? right? top? bottom?]]
             [pong.lib.core :refer [all-e]])
-  (:require-macros [pong.lib.macros :refer [letc dofs ! ?]]))
+  (:require-macros [pong.lib.macros :refer [letc dofs dofs2 ! ?]]))
 
 (defn step
   [ents]
@@ -23,9 +23,9 @@
 
 (defn block-movement
   [ents]
-  (dofs [e ents]
-        (dofs [b (all-e :bounds)]
-              (letc e [rebounds :rebounds
+  (dofs2 [e ents
+         b (all-e :bounds)]
+        (letc e [rebounds :rebounds
                        vel :moveable
                        pos :position]
                     (let [reb-factor (if rebounds -1 0)
@@ -34,12 +34,12 @@
                       (cond 
                         (and (top? e b) (< vy 0)) (rebound-y! vel (* reb-factor vy) pos)
                         (and (bottom? e b) (> vy 0)) (rebound-y! vel (* reb-factor vy) pos)
-                        ))))))
+                        )))))
 
 (defn rebound-paddle
   [ents]
-  (dofs [e ents]
-        (dofs [b (all-e :paddle)]
+  (dofs2 [e ents
+          b (all-e :paddle)]
         (letc e [rebounds :rebounds
                  vel :moveable
                  pos :position]
@@ -49,6 +49,6 @@
                 (cond 
                   (and (left? e b) (< vx 0)) (rebound-x! vel (* reb-factor vx) pos)
                   (and (right? e b) (> vx 0)) (rebound-x! vel (* reb-factor vx) pos)
-                  ))))))
+                  )))))
 
 
