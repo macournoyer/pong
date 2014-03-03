@@ -7,6 +7,7 @@
 (def add-c js/Game.addC)
 (def rem-c js/Game.remC)
 (def all-e js/Game.allE)
+(def get-e js/Game.getE)
 (def has? js/Game.has)
 (def as js/Game.as)
 (def clear! js/Game.clear)

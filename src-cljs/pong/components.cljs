@@ -3,7 +3,9 @@
 
 (component position [x y]
   :x x
-  :y y)
+  :y y
+  :initial-x x
+  :initial-y y)
 
 (component moveable [velocity-x velocity-y]
   :velocity-x (or velocity-x 0)
@@ -33,4 +35,10 @@
 (component rebounds [])
 (component paddle [])
 
-
+(component score [score]
+  :score score)
+(component scores [paddle-left left paddle-right right]
+  :paddle-left paddle-left
+  :left left
+  :paddle-right paddle-right
+  :right right)

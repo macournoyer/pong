@@ -7,7 +7,7 @@
   (:use [pong.components :only [renderable colored position
                                 keyboard actions bounds rebounds
                                 rectangular moveable solid
-                                paddle ]]))
+                                paddle score scores ]]))
 
 
 ; settings
@@ -43,7 +43,8 @@
       (keyboard :w :s)
       (actions)
       (solid)
-      (paddle)]
+      (paddle)
+      (score 0)]
    :pad-2 [ (renderable r/draw-rectangular)
       (colored "#FFFFFF")
       (position (- width 5 pad-width) 60)
@@ -52,7 +53,8 @@
       (keyboard :up :down)
       (actions)
       (solid)
-      (paddle)]
+      (paddle)
+      (score 0)]
     :ball [(renderable r/draw-rectangular)
       (colored "#FFFFFF")
       (position (- (/ width 2) (/ ball-diameter 2))
@@ -60,7 +62,8 @@
       (rectangular ball-diameter ball-diameter)
       (moveable 5 10)      
       (solid)
-      (rebounds)]
+      (rebounds)
+      (scores :pad-1 0 :pad-2 width)]
     ])
 
 (defn start [canvas]   
@@ -76,6 +79,7 @@
 
       (phys/block-movement (all-e :solid))    
       (phys/rebound-paddle (all-e :rebounds))     
+      (phys/check-scores (all-e :scores))     
        
       (phys/step (all-e :moveable))
 

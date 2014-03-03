@@ -4,6 +4,7 @@ var curId = 0;
 var entities = {};
 var EtoC = {};
 var CtoE = {};
+var NtoE = {};
 
 var game = {
 
@@ -11,8 +12,13 @@ var game = {
       return entities;
     },
 
-    EtoC: EtoC,
-    CtoE: CtoE,
+    EtoC: function() {
+        return EtoC;
+    },
+
+    CtoE: function() {
+        return CtoE;
+    },
 
     nextId: function() {
         return curId++;
@@ -62,10 +68,16 @@ var game = {
         return Object.keys(EtoC[e]);
     },
 
+    getE: function(e) {
+        var n = e.name ? ":" + e.name : e;
+        return NtoE[n];
+    },
+
     create: function(moniker) {
         var id = game.nextId();
         entities[id] = moniker;
         EtoC[id] = {};
+        NtoE[":" + moniker.name] = id;
         return id;
     },
 
