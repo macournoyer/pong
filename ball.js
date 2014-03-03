@@ -6,7 +6,16 @@ var Ball = function() {
 
   this.x = game.width / 2 - this.width
   this.y = game.height / 2 - this.height
+
+  this.yVelocity = 5 
 }
 
 Ball.prototype = new Entity()
 Ball.prototype.constructor = Ball
+
+Ball.prototype.update = function() {
+  Entity.prototype.update.apply(this, arguments)
+    if (this.y > game.height - this.height || this.y < 0) {
+      this.yVelocity *= -1
+    }
+}
