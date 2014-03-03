@@ -56,7 +56,6 @@
            rect-a :rectangular]
         (letc b [pos-b :position
                  rect-b :rectangular]
-              (.log js/console (? pos-b :x))
               (when (and 
                       (= 
                         (+ (? pos-a :x) (? rect-a :width))
